@@ -51,8 +51,7 @@ contract AutoTrading is Ownable {
     }
 
     function addStrategy(address tokenFrom, address tokenTo, uint256 tokenFromNum, uint256 tokenToNum, uint256 tokenToNumDIffThreshold)
-    public
-    returns (uint256) {
+    public{
         _strategyId++;
         bytes32 strategyValue = hashValue(tokenFrom, tokenTo, tokenFromNum, tokenToNum, tokenToNumDIffThreshold);
         _strategyContents[_strategyId] = strategyValue;
@@ -60,8 +59,6 @@ contract AutoTrading is Ownable {
         _strategyTokenToNumDIffThreshold[_strategyId] = tokenToNumDIffThreshold;
 
         emit AddStrategySuccess(msg.sender, _strategyId);
-
-        return _strategyId;
     }
 
     function getTokenToNum(address tokenFrom, address tokenTo, uint256 tokenFromNum) public view returns (uint256) {
@@ -114,7 +111,7 @@ contract AutoTrading is Ownable {
     }
 
     // Generate a hash value
-    function hashValue(address tokenFrom, address tokenTo, uint256 tokenFromNum, uint256 tokenToNum, uint256 tokenToNumDIffThreshold) public pure returns (bytes32) {
+    function hashValue(address tokenFrom, address tokenTo, uint256 tokenFromNum, uint256 tokenToNum, uint256 tokenToNumDIffThreshold) internal pure returns (bytes32) {
         return keccak256(abi.encodePacked(tokenFrom, tokenTo, tokenFromNum, tokenToNum));
     }
 
@@ -129,10 +126,6 @@ contract AutoTrading is Ownable {
     }
 
     receive() external payable {
-    }
-
-    function getStrategyContent(uint256 strategyId) external view returns (bytes32) {
-        return _strategyContents[strategyId];
     }
 
 }
