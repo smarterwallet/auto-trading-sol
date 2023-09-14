@@ -39,7 +39,7 @@ contract AutoTrading is Ownable {
 
     ISwapRouter public swapRouter;
     IUniswapV3Factory public uniswapFactory;
-    address swapRouterAddr;
+    address public swapRouterAddr;
 
     event SwapSuccess(uint256 indexed _strategyId, uint256 amountOut);
     event AddStrategySuccess(address indexed owner, uint256 indexed _strategyId);
@@ -76,8 +76,8 @@ contract AutoTrading is Ownable {
         // Get a quote from Uniswap and verify that the quote is within the volatility range
         uint256 quoteAmount = getTokenToNum(tokenFrom, tokenTo, tokenFromNum);
         uint256 tokenToNumAbsDiff = quoteAmount > tokenToNum ? quoteAmount - tokenToNum : tokenToNum - quoteAmount;
-        require(tokenToNumAbsDiff < _strategyTokenToNumDIffThreshold[strategyId],
-        "TokenToNumber difference is too large");
+        require(tokenToNumAbsDiff < _strategyTokenToNumDIffThreshold[strategyId], 
+        "TokenToNumber diff is too large");
 
         // Verify that the policies are consistent
         bytes32 strategyValue = hashValue(tokenFrom, tokenTo, tokenFromNum, tokenToNum, tokenToNumDIffThreshold);
@@ -112,7 +112,7 @@ contract AutoTrading is Ownable {
 
     // Generate a hash value
     function hashValue(address tokenFrom, address tokenTo, uint256 tokenFromNum, uint256 tokenToNum, uint256 tokenToNumDIffThreshold) internal pure returns (bytes32) {
-        return keccak256(abi.encodePacked(tokenFrom, tokenTo, tokenFromNum, tokenToNum));
+        return keccak256(abi.encodePacked(tokenFrom, tokenTo, tokenFromNum, tokenToNum, tokenToNumDIffThreshold));
     }
 
     // Get the pool address from the token pair

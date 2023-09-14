@@ -43,7 +43,7 @@ async function main() {
     await autoTrading.deployed();
     console.log("AutoTrading contract address: " + autoTrading.address);
 
-    await verifyOnBlockscan(autoTrading.address, params, "contracts/aawallet/AutoTrading.sol:AutoTrading")
+    await verifyOnBlockscan(autoTrading.address, params, "contracts/AutoTrading.sol:AutoTrading")
 }
 
 async function verifyOnBlockscan(address, args, contractPath) {
