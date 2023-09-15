@@ -31,9 +31,10 @@ npm install --save-dev git+https://github.com/Uniswap/v3-periphery.git#0.8
     PRIVATE_KEY=0xabc123abc123abc123abc123abc123abc123abc123abc123abc123abc123abc1
     ```
    
-## Test
+## Contract Info
 
-
+1. Mumbai: `0x0987e55f3d11847ef4099dabfb38c6acbd8acfc5`
+2. Polygon: ``
 
 ## Deploy
 
