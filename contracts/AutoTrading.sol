@@ -76,8 +76,7 @@ contract AutoTrading is Ownable {
         // Get a quote from Uniswap and verify that the quote is within the volatility range
         uint256 quoteAmount = getTokenToNum(tokenFrom, tokenTo, tokenFromNum);
         uint256 tokenToNumAbsDiff = quoteAmount > tokenToNum ? quoteAmount - tokenToNum : tokenToNum - quoteAmount;
-        require(tokenToNumAbsDiff < _strategyTokenToNumDIffThreshold[strategyId], 
-        "TokenToNumber diff is too large");
+        require(tokenToNumAbsDiff < _strategyTokenToNumDIffThreshold[strategyId], "TokenToNumber diff is too large");
 
         // Verify that the policies are consistent
         bytes32 strategyValue = hashValue(tokenFrom, tokenTo, tokenFromNum, tokenToNum, tokenToNumDIffThreshold);
@@ -103,7 +102,7 @@ contract AutoTrading is Ownable {
         uint256 amountOut = swapRouter.exactInputSingle(swapParams);
 
         // Verify that the conditions are not met and directly revert rollback
-        if (amountOut < tokenToNum - tokenToNumAbsDiff) {
+        if (amountOut < tokenToNum - tokenToNumDIffThreshold) {
             revert("Swap failed");
         }
 
